@@ -1,26 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GiftBox : MonoBehaviour
+public class Ball : MonoBehaviour
 {
-    public GameObject ballPrefab;
+    public float kickForce = 500f;
 
     private bool playerNear = false;
-    private int pressCount = 0;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
         if (playerNear && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            pressCount++;
-
-            Debug.Log("Pressed E: " + pressCount);
-
-            if (pressCount >= 3)
-            {
-                Instantiate(ballPrefab, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-            }
+            rb.AddForce(Vector3.forward * kickForce);
         }
     }
 
