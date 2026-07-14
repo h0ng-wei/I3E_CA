@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class EnemyVision : MonoBehaviour
 {
     public Transform player;
+    public Vector3 startPosition;
 
     private NavMeshAgent agent;
     private bool playerDetected = false;
@@ -12,6 +13,8 @@ public class EnemyVision : MonoBehaviour
     {
         // Get the NavMeshAgent from the parent Enemy object
         agent = GetComponentInParent<NavMeshAgent>();
+
+        startPosition = agent.transform.position;
     }
 
     void Update()
@@ -19,6 +22,10 @@ public class EnemyVision : MonoBehaviour
         if (playerDetected)
         {
             agent.SetDestination(player.position);
+        }
+        else
+        {
+            agent.SetDestination(startPosition);
         }
     }
 
